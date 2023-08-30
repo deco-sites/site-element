@@ -4,5 +4,14 @@ export default {
   plugins: [daisyui],
   daisyui: { themes: [], logs: false },
   content: ["./**/*.tsx"],
-  theme: { container: { center: true } },
+  theme: {
+    container: { center: true },
+    extend: {
+      fontFamily: {
+        "Poppins-Medium": ["Poppins-medium"],
+        "Poppins-Regular": ["Poppins-regular"],
+        "Poppins-SemiBold": ["Poppins-semibold"],
+      },
+    },
+  },
 };
