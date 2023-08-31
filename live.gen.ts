@@ -26,21 +26,22 @@ import * as $$$$$$$$5 from "./sections/Content/Testimonials.tsx";
 import * as $$$$$$$$6 from "./sections/Footer/Footer.tsx";
 import * as $$$$$$$$7 from "./sections/Header/Header.tsx";
 import * as $$$$$$$$8 from "./sections/Images/BannerGrid.tsx";
-import * as $$$$$$$$9 from "./sections/Images/Carousel.tsx";
-import * as $$$$$$$$10 from "./sections/Images/ImageGallery.tsx";
-import * as $$$$$$$$11 from "./sections/Images/ShoppableBanner.tsx";
-import * as $$$$$$$$12 from "./sections/Links/LinkTree.tsx";
-import * as $$$$$$$$13 from "./sections/Links/Shortcuts.tsx";
-import * as $$$$$$$$14 from "./sections/Miscellaneous/CampaignTimer.tsx";
-import * as $$$$$$$$15 from "./sections/Miscellaneous/CookieConsent.tsx";
-import * as $$$$$$$$16 from "./sections/Newsletter/Newsletter.tsx";
-import * as $$$$$$$$17 from "./sections/Product/ProductDetails.tsx";
-import * as $$$$$$$$18 from "./sections/Product/ProductShelf.tsx";
-import * as $$$$$$$$19 from "./sections/Product/SearchResult.tsx";
-import * as $$$$$$$$20 from "./sections/Product/Wishlist.tsx";
-import * as $$$$$$$$21 from "./sections/Social/InstagramPosts.tsx";
-import * as $$$$$$$$22 from "./sections/Social/WhatsApp.tsx";
-import * as $$$$$$$$23 from "./sections/Theme/Theme.tsx";
+import * as $$$$$$$$9 from "./sections/Images/BannerPromo.tsx";
+import * as $$$$$$$$10 from "./sections/Images/Carousel.tsx";
+import * as $$$$$$$$11 from "./sections/Images/ImageGallery.tsx";
+import * as $$$$$$$$12 from "./sections/Images/ShoppableBanner.tsx";
+import * as $$$$$$$$13 from "./sections/Links/LinkTree.tsx";
+import * as $$$$$$$$14 from "./sections/Links/Shortcuts.tsx";
+import * as $$$$$$$$15 from "./sections/Miscellaneous/CampaignTimer.tsx";
+import * as $$$$$$$$16 from "./sections/Miscellaneous/CookieConsent.tsx";
+import * as $$$$$$$$17 from "./sections/Newsletter/Newsletter.tsx";
+import * as $$$$$$$$18 from "./sections/Product/ProductDetails.tsx";
+import * as $$$$$$$$19 from "./sections/Product/ProductShelf.tsx";
+import * as $$$$$$$$20 from "./sections/Product/SearchResult.tsx";
+import * as $$$$$$$$21 from "./sections/Product/Wishlist.tsx";
+import * as $$$$$$$$22 from "./sections/Social/InstagramPosts.tsx";
+import * as $$$$$$$$23 from "./sections/Social/WhatsApp.tsx";
+import * as $$$$$$$$24 from "./sections/Theme/Theme.tsx";
 import { DecoManifest } from "$live/types.ts";
 import * as i2$$$0 from "$live/loaders/secret.ts";
 import * as i2$$$1 from "$live/loaders/state.ts";
@@ -214,23 +215,24 @@ const manifest = {
     "deco-sites/site-element/sections/Footer/Footer.tsx": $$$$$$$$6,
     "deco-sites/site-element/sections/Header/Header.tsx": $$$$$$$$7,
     "deco-sites/site-element/sections/Images/BannerGrid.tsx": $$$$$$$$8,
-    "deco-sites/site-element/sections/Images/Carousel.tsx": $$$$$$$$9,
-    "deco-sites/site-element/sections/Images/ImageGallery.tsx": $$$$$$$$10,
-    "deco-sites/site-element/sections/Images/ShoppableBanner.tsx": $$$$$$$$11,
-    "deco-sites/site-element/sections/Links/LinkTree.tsx": $$$$$$$$12,
-    "deco-sites/site-element/sections/Links/Shortcuts.tsx": $$$$$$$$13,
+    "deco-sites/site-element/sections/Images/BannerPromo.tsx": $$$$$$$$9,
+    "deco-sites/site-element/sections/Images/Carousel.tsx": $$$$$$$$10,
+    "deco-sites/site-element/sections/Images/ImageGallery.tsx": $$$$$$$$11,
+    "deco-sites/site-element/sections/Images/ShoppableBanner.tsx": $$$$$$$$12,
+    "deco-sites/site-element/sections/Links/LinkTree.tsx": $$$$$$$$13,
+    "deco-sites/site-element/sections/Links/Shortcuts.tsx": $$$$$$$$14,
     "deco-sites/site-element/sections/Miscellaneous/CampaignTimer.tsx":
-      $$$$$$$$14,
-    "deco-sites/site-element/sections/Miscellaneous/CookieConsent.tsx":
       $$$$$$$$15,
-    "deco-sites/site-element/sections/Newsletter/Newsletter.tsx": $$$$$$$$16,
-    "deco-sites/site-element/sections/Product/ProductDetails.tsx": $$$$$$$$17,
-    "deco-sites/site-element/sections/Product/ProductShelf.tsx": $$$$$$$$18,
-    "deco-sites/site-element/sections/Product/SearchResult.tsx": $$$$$$$$19,
-    "deco-sites/site-element/sections/Product/Wishlist.tsx": $$$$$$$$20,
-    "deco-sites/site-element/sections/Social/InstagramPosts.tsx": $$$$$$$$21,
-    "deco-sites/site-element/sections/Social/WhatsApp.tsx": $$$$$$$$22,
-    "deco-sites/site-element/sections/Theme/Theme.tsx": $$$$$$$$23,
+    "deco-sites/site-element/sections/Miscellaneous/CookieConsent.tsx":
+      $$$$$$$$16,
+    "deco-sites/site-element/sections/Newsletter/Newsletter.tsx": $$$$$$$$17,
+    "deco-sites/site-element/sections/Product/ProductDetails.tsx": $$$$$$$$18,
+    "deco-sites/site-element/sections/Product/ProductShelf.tsx": $$$$$$$$19,
+    "deco-sites/site-element/sections/Product/SearchResult.tsx": $$$$$$$$20,
+    "deco-sites/site-element/sections/Product/Wishlist.tsx": $$$$$$$$21,
+    "deco-sites/site-element/sections/Social/InstagramPosts.tsx": $$$$$$$$22,
+    "deco-sites/site-element/sections/Social/WhatsApp.tsx": $$$$$$$$23,
+    "deco-sites/site-element/sections/Theme/Theme.tsx": $$$$$$$$24,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$$5,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$$6,
     "deco-sites/std/sections/configLinxImpulse.global.tsx": i2$$$$$7,

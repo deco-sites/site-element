@@ -23,26 +23,37 @@ function GlobalTags() {
           }") format("woff2");
               font-style: medium;
               font-weight: normal;
-        @font-face {
-              font-family: "Poppins-Regular";
-              src: url("${
+        },
+            `,
+        }}
+      />
+      <style
+        type="text/css"
+        dangerouslySetInnerHTML={{
+          __html: `          
+          @font-face {
+            font-family: "Poppins-Regular";
+            src: url("${
             asset("/fonts/Poppins-Regular.woff2")
           }") format("woff2");
-              font-style: regular;
-              font-weight: normal;
-        },
-        @font-face {
-              font-family: "Poppins-SemiBold";
-              src: url("${
+            font-style: regular;
+            font-weight: normal;
+      },
+`,
+        }}
+      />
+      <style
+        type="text/css"
+        dangerouslySetInnerHTML={{
+          __html: `          
+          @font-face {
+            font-family: "Poppins-SemiBold";
+            src: url("${
             asset("/fonts/Poppins-SemiBold.woff2")
           }") format("woff2");
-              font-style: semibold;
-              font-weight: normal;
-        },
-              
-              body{
-                font-family:'Poppins-Regular'
-              }`,
+            font-style: semibold;
+            font-weight: normal;
+      },`,
         }}
       />
     </Head>
