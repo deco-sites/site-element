@@ -12,6 +12,9 @@ export default {
         "Poppins-Regular": ["Poppins-regular"],
         "Poppins-SemiBold": ["Poppins-semibold"],
       },
+      colors: {
+        "pre-header": "#000000",
+      },
     },
   },
 };

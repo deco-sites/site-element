@@ -2,7 +2,7 @@ import type { Props as SearchbarProps } from "$store/components/search/Searchbar
 import Drawers from "$store/islands/Header/Drawers.tsx";
 import type { Product, Suggestion } from "deco-sites/std/commerce/types.ts";
 import type { Image } from "deco-sites/std/components/types.ts";
-import Alert from "./Alert.tsx";
+import Alert, { ItemAlert, OuthersLinks } from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
 import { headerHeight } from "./constants.ts";
 
@@ -24,7 +24,8 @@ export interface NavItem {
 }
 
 export interface Props {
-  alerts: string[];
+  alerts: ItemAlert[];
+  outhesLinks: OuthersLinks;
   /** @title Search Bar */
   searchbar?: SearchbarProps;
   /**
@@ -50,6 +51,7 @@ export interface Props {
 
 function Header({
   alerts,
+  outhesLinks,
   searchbar: _searchbar,
   products,
   navItems = [],
@@ -65,7 +67,7 @@ function Header({
           searchbar={searchbar}
         >
           <div class="bg-base-100 fixed w-full z-50">
-            <Alert alerts={alerts} />
+            <Alert alerts={alerts} outhersLinks={outhesLinks} />
             <Navbar items={navItems} searchbar={searchbar} logo={logo} />
           </div>
         </Drawers>
