@@ -4,25 +4,25 @@ import Slider from "$store/components/ui/Slider.tsx";
 import SliderJS from "$store/islands/SliderJS.tsx";
 import { Picture, Source } from "deco-sites/std/components/Picture.tsx";
 import { useId } from "$store/sdk/useId.ts";
-import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
+import type {
+  Image as LiveImage,
+  Video as LiveVideo,
+} from "deco-sites/std/components/types.ts";
 
 /**
  * @titleBy alt
  */
 export interface Banner {
+  type: "Image" | "Video";
   /** @description desktop otimized image */
-  desktop: LiveImage;
+  desktop: LiveImage | LiveVideo;
   /** @description mobile otimized image */
-  mobile: LiveImage;
+  mobile: LiveImage | LiveVideo;
   /** @description Image's alt text */
   alt: string;
   action?: {
     /** @description when user clicks on the image, go to this link */
     href: string;
-    /** @description Image text title */
-    title: string;
-    /** @description Image text subtitle */
-    subTitle: string;
     /** @description Button label */
     label: string;
   };
@@ -47,48 +47,68 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
     mobile,
     desktop,
     action,
+    type,
   } = image;
 
   return (
-    <a
-      href={action?.href ?? "#"}
-      aria-label={action?.label}
-      class="relative h-[600px] overflow-y-hidden w-full"
-    >
-      <Picture preload={lcp}>
-        <Source
-          media="(max-width: 767px)"
-          fetchPriority={lcp ? "high" : "auto"}
-          src={mobile}
-          width={360}
-          height={600}
-        />
-        <Source
-          media="(min-width: 768px)"
-          fetchPriority={lcp ? "high" : "auto"}
-          src={desktop}
-          width={1440}
-          height={600}
-        />
-        <img
-          class="object-cover w-full h-full"
-          loading={lcp ? "eager" : "lazy"}
-          src={desktop}
-          alt={alt}
-        />
-      </Picture>
-      {action && (
-        <div class="absolute h-min top-0 bottom-0 m-auto left-0 right-0 sm:right-auto sm:left-[12%] max-h-min max-w-[235px] flex flex-col gap-4 p-4 rounded glass">
-          <span class="text-6xl font-medium text-base-100">
-            {action.title}
-          </span>
-          <span class="font-Poppins-Medium text-xl text-base-100">
-            {action.subTitle}
-          </span>
-          <Button class="glass">{action.label}</Button>
-        </div>
-      )}
-    </a>
+    <div class={"relative"}>
+      <a
+        href={action?.href ?? "#"}
+        aria-label={action?.label}
+        class="relative max-h-[600px] overflow-y-hidden w-full"
+      >
+        <Picture preload={lcp}>
+          <Source
+            media="(max-width: 767px)"
+            fetchPriority={lcp ? "high" : "auto"}
+            src={mobile}
+            width={360}
+            height={600}
+          />
+          <Source
+            media="(min-width: 768px)"
+            fetchPriority={lcp ? "high" : "auto"}
+            src={desktop}
+            width={1440}
+            height={600}
+          />
+          {type == "Image"
+            ? (
+              <img
+                class="object-cover w-full h-full"
+                loading={lcp ? "eager" : "lazy"}
+                src={desktop}
+                alt={alt}
+              />
+            )
+            : (
+              <video
+                class="object-cover w-full h-full"
+                loading={"eager"}
+                src={desktop}
+                alt={alt}
+                loop
+                autoPlay
+                type={"video/mp4"}
+              >
+              </video>
+            )}
+        </Picture>
+      </a>
+      <div class={"absolute top-0 left-0 w-full h-full pb-11 xl:pb-24"}>
+        {action && (
+          <div
+            class={"w-full h-full top-0 left-0 flex justify-center items-end"}
+          >
+            <a href={action.href} class={""}>
+              <Button class="bg-white hover:bg-[#565656] text-[11px] font-Poppins-Medium px-12 py-4 uppercase hover:text-white">
+                {action.label}
+              </Button>
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -111,10 +131,7 @@ function Dots({ images, interval = 0 }: Props) {
           <li class="carousel-item">
             <Slider.Dot index={index}>
               <div class="py-5">
-                <div
-                  class="w-16 sm:w-20 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-base-100 from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]"
-                  style={{ animationDuration: `${interval}s` }}
-                />
+                <div class="w-2 h-2 rounded group-disabled:bg-white bg-default border border-default " />
               </div>
             </Slider.Dot>
           </li>
@@ -127,21 +144,21 @@ function Dots({ images, interval = 0 }: Props) {
 function Buttons() {
   return (
     <>
-      <div class="flex items-center justify-center z-10 col-start-1 row-start-2">
-        <Slider.PrevButton class="btn btn-circle glass">
+      <div class="items-center justify-center z-10 col-start-1 row-start-2 hidden sm:flex">
+        <Slider.PrevButton class="bg-transparent">
           <Icon
             class="text-base-100"
-            size={24}
+            size={30}
             id="ChevronLeft"
             strokeWidth={3}
           />
         </Slider.PrevButton>
       </div>
-      <div class="flex items-center justify-center z-10 col-start-3 row-start-2">
-        <Slider.NextButton class="btn btn-circle glass">
+      <div class="items-center justify-center z-10 col-start-3 row-start-2 hidden sm:flex">
+        <Slider.NextButton class="bg-transparent">
           <Icon
             class="text-base-100"
-            size={24}
+            size={30}
             id="ChevronRight"
             strokeWidth={3}
           />
@@ -151,7 +168,7 @@ function Buttons() {
   );
 }
 
-function BannerCarousel({ images, preload, interval }: Props) {
+function BannerCarousel({ images, preload, interval = 11 }: Props) {
   const id = useId();
 
   return (

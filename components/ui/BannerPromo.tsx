@@ -23,7 +23,7 @@ function BannerPromo(
     Props,
 ) {
   return (
-    <div class={"relative"}>
+    <div class={"relative mb-5"}>
       <Picture preload={lcp}>
         <Source
           media="(max-width: 1020px)"
