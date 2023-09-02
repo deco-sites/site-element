@@ -88,7 +88,7 @@ function CategoryList(props: Props) {
   return (
     <div
       id={id}
-      class="container flex flex-col text-base-content mt-20 justify-center max-w-[1488px] py-12 "
+      class="container flex flex-col text-base-content my-20 justify-center max-w-[1488px] pb-12 "
     >
       <h2
         class={"uppercase text-2xl text-center font-Poppins-SemiBold mb-12"}
