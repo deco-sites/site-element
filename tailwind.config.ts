@@ -19,6 +19,8 @@ export default {
         "danger": "#b12534",
         "primary-newsletter": "#474747",
         "secord-newsletter": "#BDBDBD",
+        "footer": "#181818",
+        "tag-footer": "#303030",
       },
     },
     fontSize: {

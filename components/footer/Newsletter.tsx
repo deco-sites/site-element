@@ -40,7 +40,9 @@ function Newsletter(
             {description}
           </p>
         </div>
-        <div class={"w-full flex flex-col lg:flex-row lg:gap-2 items-center"}>
+        <div
+          class={"w-full flex flex-col lg:flex-row lg:gap-2 items-center justify-end"}
+        >
           <input
             class={" w-full border text-secord-newsletter border-secord-newsletter text-sm bg-transparent px-2 py-3 my-6 lg:max-w-[520px]"}
             type="text"
