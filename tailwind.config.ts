@@ -11,12 +11,16 @@ export default {
         "Poppins-Medium": ["Poppins-medium"],
         "Poppins-Regular": ["Poppins-regular"],
         "Poppins-SemiBold": ["Poppins-semibold"],
+        "Element-Icons": ["ElementIcons"],
       },
       colors: {
         "pre-header": "#000000",
+        "default": "#fff",
+        "danger": "#b12534",
       },
     },
     fontSize: {
+      xs: ["0.75rem", "1rem"],
       sm: "0.94rem",
       base: "1rem",
       xl: ".940rem",

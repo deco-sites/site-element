@@ -56,6 +56,18 @@ function GlobalTags() {
       },`,
         }}
       />
+      <style
+        type="text/css"
+        dangerouslySetInnerHTML={{
+          __html: `          
+          @font-face {
+            font-family: "ElementIcons";
+            src: url("${asset("/fonts/ElementIcons.woff2")}") format("woff2");
+            font-style: regular;
+            font-weight: normal;
+      },`,
+        }}
+      />
     </Head>
   );
 }
