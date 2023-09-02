@@ -17,6 +17,8 @@ export default {
         "pre-header": "#000000",
         "default": "#fff",
         "danger": "#b12534",
+        "primary-newsletter": "#474747",
+        "secord-newsletter": "#BDBDBD",
       },
     },
     fontSize: {
