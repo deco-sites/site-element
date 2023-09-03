@@ -2,6 +2,7 @@ import { useId } from "$store/sdk/useId.ts";
 import Slider from "$store/components/ui/Slider.tsx";
 import SliderJS from "$store/islands/SliderJS.tsx";
 import ListCollapsed from "deco-sites/staging/islands/DivClick.tsx";
+import { repeat } from "https://deno.land/std@0.140.0/bytes/mod.ts";
 export type Link = {
   label: string;
   href: string;
@@ -74,11 +75,13 @@ function SlideLinks({ links }: Props) {
   return (
     <div
       id={id}
-      class={"flex px-3 relative z-50 w-full justify-center  "}
+      class={"flex relative z-50 w-full justify-center  "}
     >
-      <div class={"border-b border-primary-newsletter"}>
-        <div class={" max-w-[1530px] w-full "}>
-          <Slider class="carousel  carousel-center w-full col-span-full row-span-full gap-5 py-8 ">
+      <div class={" w-full"}>
+        <div
+          class={" max-w-[1530px] w-full mx-auto lg:px-7"}
+        >
+          <Slider class="carousel  carousel-center w-full col-span-full border-b border-primary-newsletter px-3 row-span-full gap-5 py-8 lg:px-0">
             {links?.map((link, index) => (
               <Slider.Item
                 index={index}
@@ -109,7 +112,7 @@ function Footer(
   return (
     <div class={"w-full bg-footer"}>
       <SlideLinks links={links} />
-      <div>
+      <div class={"lg:hidden"}>
         <div class={"w-full flex flex-row justify-center"}>
           <div class={"w-full flex flex-col justify-center items-center"}>
             <a class=" text-default before:content-['\E91E'] font-Poppins-Medium before:font-Element-Icons before:text-[30px] w-full text-center px-4 py-14 before:block border-r border-primary-newsletter">
@@ -128,7 +131,7 @@ function Footer(
           {socialMedia?.map((social) => (
             <a
               href={social.href}
-              class={"font-Element-Icons text-[1.75rem] text-default"}
+              class={"font-Element-Icons text-[1.75rem] text-default hover:text-primary-newsletter "}
             >
               <SocialMedia social={social.social} />
             </a>
@@ -138,26 +141,100 @@ function Footer(
           {listItem?.map((item) => <ListCollapsed listItem={item} />)}
         </div>
       </div>
-      <div class={"flex flex-col gap-4 p-7"}>
-        <div class={"flex w-full justify-center "}>
-          <span class="text-default font-Poppins-Medium before:content-['\E92F'] before:text-[20pxpx] before:font-Element-Icons before:block flex flex-row gap-2">
-            {selectRegion}
-          </span>
-        </div>
-        <div class={"w-full flex justify-center"}>
-          <span class={"text-center text-default text-xs"}>
-            {infosFooter?.map((infos) => (
-              <a
-                class={"text-primary-newsletter text-xs border-r border-primary-newsletter last:border-none px-2"}
-                href={infos.href}
+      {/* desktop */}
+      <div
+        class={`hidden w-full lg:grid grid-rows-1 max-w-[1530px] mx-auto py-7 px-7`}
+        style={{
+          gridTemplateColumns: `repeat(${
+            listItem ? listItem.length + 1 : 1
+          },minmax(0,1fr))`,
+        }}
+      >
+        <div>
+          <div>
+            <h4
+              class={"text-default uppercase pb-3 text-sm font-Poppins-Medium"}
+            >
+              {location}
+            </h4>
+            <div class={"pb-7"}>
+              <input
+                class={"border border-primary-newsletter pl-2 py-1 bg-transparent text-xs font-Poppins-Regular w-full h-[40px] max-w-[300px]"}
+                type="text"
+                placeholder={"Search your location"}
               >
-                {infos.label}
-              </a>
-            ))}
-            <span class={"mr-2"}>
-              © 2022 Boardriders. All rights reserved
+                <button class="w-[40px] h-[40px]] after:content-['\E930'] after:font-Element-Icons text-[20px] relative top-[5px] right-[40px] text-default">
+                </button>
+              </input>
+            </div>
+          </div>
+          <div>
+            <h4
+              class={"text-default uppercase pb-3 text-sm font-Poppins-Medium"}
+            >
+              {"Foolow Us"}
+            </h4>
+            <div
+              class={"w-full flex justify-start gap-4 pr-9 py-9 lg:py-0 "}
+            >
+              {socialMedia?.map((social) => (
+                <a
+                  href={social.href}
+                  class={"font-Element-Icons text-[1.75rem] text-default hover:text-primary-newsletter"}
+                >
+                  <SocialMedia social={social.social} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        {listItem?.map((iten) => (
+          <div>
+            <h4
+              class={"text-default uppercase pb-3 text-sm font-Poppins-Medium"}
+            >
+              {iten.title}
+            </h4>
+            <ul>
+              {iten.itens.map((link) => (
+                <li
+                  class={"text-default hover:text-primary-newsletter font-Poppins-Medium text-xs pb-2"}
+                >
+                  <a href={link.href}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class={"lg:px-7 lg:max-w-[1530px] mx-auto"}>
+        <div
+          class={"flex flex-col gap-4 p-7 lg:flex-row lg:border-t lg:border-primary-newsletter lg:px-0"}
+        >
+          <div class={"flex w-full justify-center  lg:justify-start"}>
+            <span class="text-default font-Poppins-Medium before:content-['\E92F'] before:text-[20pxpx] before:font-Element-Icons before:block flex flex-row gap-2">
+              {selectRegion}
             </span>
-          </span>
+          </div>
+          <div class={"w-full flex justify-center lg:justify-end "}>
+            <span
+              class={"text-center text-default text-xs hover:text-default lg:text-end"}
+            >
+              {infosFooter?.map((infos) => (
+                <a
+                  class={"text-primary-newsletter text-xs border-r border-primary-newsletter last:border-none px-2"}
+                  href={infos.href}
+                >
+                  {infos.label}
+                </a>
+              ))}
+              <span class={"mr-2"}>
+                © 2022 Boardriders. All rights reserved
+              </span>
+            </span>
+          </div>
         </div>
       </div>
     </div>

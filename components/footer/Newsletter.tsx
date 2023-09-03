@@ -16,10 +16,10 @@ function Newsletter(
 ) {
   return (
     <div
-      class={"flex w-full justify-center items-center flex-col bg-primary-newsletter pt-8 pb-5 px-6"}
+      class={"flex w-full justify-center items-center flex-col bg-primary-newsletter pt-8 pb-5"}
     >
       <div
-        class={"flex w-full justify-start flex-col max-w-[400px] lg:max-w-[1530px] lg:flex-row lg:mx-0 items-center"}
+        class={"flex w-full justify-start flex-col max-w-[400px] lg:max-w-[1530px] lg:flex-row lg:mx-0 items-center px-7"}
       >
         <img
           class={"mb-10 lg:mb-0 lg:mr-4 self-start lg:self-center"}
