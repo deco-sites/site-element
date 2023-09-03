@@ -109,7 +109,7 @@ function Alert(
       class={"flex flex-row bg-pre-header justify-center items-center w-full"}
     >
       <div
-        class={"flex flex-row bg-pre-header justify-between items-center px-12 max-w-[95rem] mx-auto w-full"}
+        class={"flex flex-row bg-pre-header justify-between items-center lg:px-12 max-w-[95rem] mx-auto w-full"}
       >
         <div class={"flex w-full justify-center items-center"}>
           <div

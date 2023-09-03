@@ -6,17 +6,12 @@ import Alert, { ItemAlert, OuthersLinks } from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
 import { headerHeight } from "./constants.ts";
 
+export type Transform = "uppercase" | "lowercase";
 export interface NavItem {
   label: string;
   href: string;
-  children?: Array<{
-    label: string;
-    href: string;
-    children?: Array<{
-      label: string;
-      href: string;
-    }>;
-  }>;
+  textTransform?: Transform; // Adicione esta propriedade
+  children?: Array<NavItem>;
   image?: {
     src?: Image;
     alt?: string;
@@ -61,12 +56,12 @@ function Header({
   const searchbar = { ..._searchbar, products, suggestions };
   return (
     <>
-      <header style={{ height: headerHeight }}>
+      <header class={"h-[116px] lg:h-[103px]"}>
         <Drawers
           menu={{ items: navItems }}
           searchbar={searchbar}
         >
-          <div class="bg-base-100 fixed w-full z-50">
+          <div class="bg-base-100 w-full z-50">
             <Alert alerts={alerts} outhersLinks={outhesLinks} />
             <Navbar items={navItems} searchbar={searchbar} logo={logo} />
           </div>
