@@ -32,6 +32,10 @@ interface Props {
   socialMedia?: socialMedia[];
 
   listItem?: ListItem[];
+
+  selectRegion?: string;
+
+  infosFooter?: Link[];
 }
 
 function SocialMedia({ social }: socialMedia) {
@@ -91,7 +95,17 @@ function SlideLinks({ links }: Props) {
   );
 }
 
-function Footer({ links, contact, location, socialMedia, listItem }: Props) {
+function Footer(
+  {
+    links,
+    contact,
+    location,
+    socialMedia,
+    listItem,
+    selectRegion,
+    infosFooter,
+  }: Props,
+) {
   return (
     <div class={"w-full bg-footer"}>
       <SlideLinks links={links} />
@@ -122,6 +136,28 @@ function Footer({ links, contact, location, socialMedia, listItem }: Props) {
         </div>
         <div>
           {listItem?.map((item) => <ListCollapsed listItem={item} />)}
+        </div>
+      </div>
+      <div class={"flex flex-col gap-4 p-7"}>
+        <div class={"flex w-full justify-center "}>
+          <span class="text-default font-Poppins-Medium before:content-['\E92F'] before:text-[20pxpx] before:font-Element-Icons before:block flex flex-row gap-2">
+            {selectRegion}
+          </span>
+        </div>
+        <div class={"w-full flex justify-center"}>
+          <span class={"text-center text-default text-xs"}>
+            {infosFooter?.map((infos) => (
+              <a
+                class={"text-primary-newsletter text-xs border-r border-primary-newsletter last:border-none px-2"}
+                href={infos.href}
+              >
+                {infos.label}
+              </a>
+            ))}
+            <span class={"mr-2"}>
+              © 2022 Boardriders. All rights reserved
+            </span>
+          </span>
         </div>
       </div>
     </div>
