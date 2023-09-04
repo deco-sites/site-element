@@ -42,11 +42,12 @@ function Result({
 
   return (
     <>
-      <div class="container px-4 sm:py-10">
+      <div class="px-9 sm:py-10">
         <SearchControls
           sortOptions={sortOptions}
           filters={filters}
           breadcrumb={breadcrumb}
+          pageInfo={pageInfo}
           displayFilter={layout?.variant === "drawer"}
         />
 
