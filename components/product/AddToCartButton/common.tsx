@@ -60,7 +60,7 @@ export default function AddToCartButton(props: Props) {
   const btnProps = useAddToCart(props);
 
   return (
-    <Button {...btnProps} data-deco="add-to-cart" class="btn-primary">
+    <Button {...btnProps} data-deco="add-to-cart" class="btn-primary bg-black">
       Adicionar à Sacola
     </Button>
   );
