@@ -1,7 +1,7 @@
 import { useId } from "$store/sdk/useId.ts";
 import Slider from "$store/components/ui/Slider.tsx";
 import SliderJS from "$store/islands/SliderJS.tsx";
-import ListCollapsed from "deco-sites/staging/islands/DivClick.tsx";
+import DivDrawer from "deco-sites/staging/islands/DivClick.tsx";
 import { repeat } from "https://deno.land/std@0.140.0/bytes/mod.ts";
 export type Link = {
   label: string;
@@ -138,7 +138,7 @@ function Footer(
           ))}
         </div>
         <div>
-          {listItem?.map((item) => <ListCollapsed listItem={item} />)}
+          {listItem?.map((item) => <DivDrawer listItem={item} />)}
         </div>
       </div>
       {/* desktop */}
