@@ -31,7 +31,7 @@ function SearchControls(
         <>
           <div class="bg-base-100 flex flex-col h-full divide-y overflow-y-hidden">
             <div class="flex justify-between items-center">
-              <h1 class="px-4 py-3">
+              <h1 class="px-3 lg:px-4 py-3">
                 <span class="font-medium text-2xl">Filtrar</span>
               </h1>
               <Button class="btn btn-ghost" onClick={() => open.value = false}>
@@ -46,7 +46,7 @@ function SearchControls(
       }
     >
       <div class={"flex flex-col"}>
-        <div class="flex flex-col justify-between mb-4 p-4 sm:mb-0 sm:p-0 sm:gap-4 sm:flex-row sm:border-b sm:border-base-200">
+        <div class="flex flex-col justify-between mb-4 p-0 py-4 sm:mb-0 sm:p-0 sm:gap-4 sm:flex-row sm:border-b sm:border-base-200">
           <div class="flex flex-col gap-4 items-start sm:p-0 mb-7">
             <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
             <HeadingTag

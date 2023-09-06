@@ -42,7 +42,7 @@ function Result({
 
   return (
     <>
-      <div class="px-9 sm:py-10">
+      <div class="px-3 lg:px-9 sm:py-10">
         <SearchControls
           sortOptions={sortOptions}
           filters={filters}
