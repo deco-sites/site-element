@@ -57,7 +57,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
         aria-label={action?.label}
         class="relative max-h-[600px] overflow-y-hidden w-full"
       >
-        <Picture preload={lcp}>
+        <Picture preload={false}>
           <Source
             media="(max-width: 767px)"
             fetchPriority={lcp ? "high" : "auto"}
@@ -84,11 +84,12 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
             : (
               <video
                 class="object-cover w-full h-full"
-                loading={"eager"}
+                loading={lcp ? "eager" : "lazy"}
                 src={desktop}
                 alt={alt}
                 loop
                 autoPlay
+                preload={"auto"}
                 type={"video/mp4"}
               >
               </video>
