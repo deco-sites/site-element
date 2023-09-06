@@ -3,6 +3,7 @@ import SliderJS from "$store/islands/SliderJS.tsx";
 import { useId } from "$store/sdk/useId.ts";
 import Icon from "deco-sites/staging/components/ui/Icon.tsx";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
+import Button from "deco-sites/staging/components/ui/Button.tsx";
 
 export interface ItemAlert {
   /**
@@ -175,16 +176,16 @@ function Alert(
           >
             {pageCustom.label}
           </a>
-          <div class={"group"}>
+          <div class={"group relative"}>
             <span
               class={" font-Poppins-Medium cursor-pointer text-white text-[11px] uppercase tracking-wider hover:text-gray-500 "}
             >
               {countrySelector.label}
             </span>
             <div
-              class={"w-full h-full bg-black absolute top-[100%] hidden group-hover:flex "}
+              class={"w-full h-full bg-black absolute top-[100%] right-0 hidden group-hover:flex px-5 py-8"}
             >
-              <h4>Select Coutry</h4>
+              <h4 class={"uppercase text-default"}>Select Coutry</h4>
               <div>
                 {countrySelector.coutrys.map((coutry, index) => {
                   <li>
@@ -198,20 +199,29 @@ function Alert(
               </div>
             </div>
           </div>
-          <div>
+          <div class={"relative group/edit group-hover/item:visible group "}>
             <span
-              class={"font-Poppins-Medium cursor-pointer text-white text-[11px] uppercase tracking-wider hover:text-gray-500 group/edit group-hover/item:visible"}
+              class={"font-Poppins-Medium cursor-pointer text-white text-[11px] uppercase tracking-wider hover:text-gray-500 "}
             >
               {userAccess.label}
             </span>
-            <div class={"absolute"}>
-              <p>
+            <div
+              class={"absolute hidden group-hover:flex bg-black top-[100%] px-5 py-8 z-10 min-w-[250px] flex-col"}
+            >
+              <p
+                class={"text-default font-Poppins-Medium uppercase text-[11px] text-center mb-2 mt-6 mx-6"}
+              >
                 {userAccess.content}
               </p>
-              <a href={userAccess.btn.href}>
-                {userAccess.btn.label}
-              </a>
-              <a href={userAccess.link.href}>
+              <Button>
+                <a href={userAccess.btn.href}>
+                  {userAccess.btn.label}
+                </a>
+              </Button>
+              <a
+                class={"underline uppercase text-[11px] text-default"}
+                href={userAccess.link.href}
+              >
                 {userAccess.link.label}
               </a>
             </div>
