@@ -50,16 +50,16 @@ function BannerPromo(
         class={"absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center gap-3 lg:flex-row lg:justify-around"}
       >
         <p
-          class={"text-sm font-Poppins-Medium tracking-wider text-white lg:text-xl"}
+          class={"text-sm font-Poppins-Medium tracking-wider text-white lg:text-xl xl:text-[20px] w-full text-center"}
         >
           {primaryText}
         </p>
         <p
-          class={"text-sm font-Poppins-Medium tracking-wider text-white lg:text-xl"}
+          class={"text-sm font-Poppins-Medium tracking-wider text-white lg:text-xl xl:text-[20px] w-full text-center"}
         >
           {secordText}
         </p>
-        <a href={btnLink.href}>
+        <a href={btnLink.href} class={"w-full text-center"}>
           <Button class={"uppercase"} label={btnLink.label}>
             {btnLink.label}
           </Button>
