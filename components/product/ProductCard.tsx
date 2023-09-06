@@ -212,7 +212,6 @@ function ProductCard({ product, preload, itemListName, layout }: Props) {
                   align === "center" ? "justify-center" : "justify-start"
                 } ${l?.onMouseOver?.showSkuSelector ? "lg:hidden" : ""}`}
               >
-                {skuSelector}
               </ul>
             )}
           </>
@@ -228,13 +227,6 @@ function ProductCard({ product, preload, itemListName, layout }: Props) {
                   <h2 class="truncate text-base lg:text-lg text-base-content">
                     {name}
                   </h2>
-                )}
-              {l?.hide?.productDescription
-                ? ""
-                : (
-                  <p class="truncate text-sm lg:text-sm text-neutral">
-                    {product.description}
-                  </p>
                 )}
             </div>
           )}
@@ -258,13 +250,6 @@ function ProductCard({ product, preload, itemListName, layout }: Props) {
                 {formatPrice(price, offers!.priceCurrency!)}
               </div>
             </div>
-            {l?.hide?.installments
-              ? ""
-              : (
-                <div class="text-base-300 text-sm lg:text-base">
-                  ou {installments}
-                </div>
-              )}
           </div>
         )}
 
@@ -282,18 +267,6 @@ function ProductCard({ product, preload, itemListName, layout }: Props) {
             )}
           </>
         )}
-
-        {!l?.hide?.cta
-          ? (
-            <div
-              class={`flex-auto flex items-end ${
-                l?.onMouseOver?.showCta ? "lg:hidden" : ""
-              }`}
-            >
-              {cta}
-            </div>
-          )
-          : ""}
       </div>
     </div>
   );
