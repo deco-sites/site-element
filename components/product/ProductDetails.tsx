@@ -20,6 +20,7 @@ import Image from "deco-sites/std/components/Image.tsx";
 import ProductSelector from "./ProductVariantSelector.tsx";
 import { Product } from "deco-sites/std/packs/vtex/types.ts";
 import { asset } from "$fresh/runtime.ts";
+import DivDrawerSimple from "deco-sites/staging/islands/DivDrawerSimple.tsx";
 
 export type Variant = "front-back" | "slider" | "auto";
 
@@ -76,7 +77,7 @@ function Price({ page }: { page: ProductDetailsPage }) {
           {formatPrice(price, offers!.priceCurrency!)}
         </span>
       </div>
-      <span class="text-sm text-base-300">
+      <span class="text-lg text-base-300">
         {installments}
       </span>
     </div>
@@ -88,7 +89,7 @@ function ProductSelectorPage({ page }: { page: ProductDetailsPage }) {
   return (
     <>
       {/* Sku Selector */}
-      <div class="mt-4 sm:mt-6">
+      <div class="mt-4 lg:mt-6">
         <ProductSelector product={product} />
       </div>
     </>
@@ -106,7 +107,7 @@ function Buttons({ page }: { page: ProductDetailsPage }) {
   return (
     <>
       {/* Add to Cart and Favorites button */}
-      <div class="mt-4 sm:mt-10 gap-2 grid grid-cols-[1fr_45px]">
+      <div class="mt-4 lg:mt-10 gap-2 grid grid-cols-[1fr_45px]">
         {availability === "https://schema.org/InStock"
           ? (
             <>
@@ -181,8 +182,8 @@ function ProductInfo({ page }: { page: ProductDetailsPage }) {
         />
       </div>
       {/* Description card */}
-      <div class="mt-4 sm:mt-6">
-        <span class="text-sm">
+      <div class="mt-4 lg:mt-6">
+        <span class="text-lg">
           {description && (
             <details>
               <summary class="cursor-pointer">Descrição</summary>
@@ -299,16 +300,16 @@ function Details({
               itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
             />
           </div>
-          <div class={"px-3"}>
+          <div class={"px-3 lg:hidden"}>
             <ProductName page={page} />
           </div>
           <div
             id={id}
-            class="grid grid-cols-1 gap-4 sm:grid-cols-[max-content_40vw_40vw] sm:grid-rows-1 sm:justify-center"
+            class="grid grid-cols-1 gap-4 lg:grid-cols-[105px_1fr_1fr] lg:grid-rows-1 lg:justify-center"
           >
             {/* Image Slider */}
-            <div class="relative sm:col-start-2 sm:col-span-1 sm:row-start-1">
-              <Slider class="carousel carousel-center gap-6 w-screen sm:w-[40vw]">
+            <div class="relative lg:col-start-2 lg:col-span-1 lg:row-start-1">
+              <Slider class="carousel carousel-center gap-6 w-screen lg:w-[40vw] lg:max-w-[650px]">
                 {images.map((img, index) => (
                   <Slider.Item
                     index={index}
@@ -351,11 +352,11 @@ function Details({
               </div>
 
               {/* Dots */}
-              <ul class="flex gap-2 justify-center overflow-auto px-4 sm:px-0 sm:flex-col sm:col-start-1 sm:col-span-1 sm:row-start-1 absolute w-full bottom-0">
+              <ul class="flex gap-2 justify-center overflow-auto px-4 lg:px-0 lg:flex-col lg:col-start-1 lg:col-span-1 lg:row-start-1 absolute w-full bottom-0">
                 {images.map((img, index) => (
                   <li class="min-w-[8px] flex justify-center items-center">
                     <Slider.Dot index={index}>
-                      <div class="py-5">
+                      <div class="py-5 flex lg:hidden">
                         <div class="w-2 h-2 rounded group-disabled:bg-[#aeaeb2cc] bg-default " />
                       </div>
                     </Slider.Dot>
@@ -363,9 +364,29 @@ function Details({
                 ))}
               </ul>
             </div>
+            {/* Dots */}
+            <ul class="gap-2 sm:justify-start overflow-auto px-4 sm:px-0 sm:flex-col sm:col-start-1 sm:col-span-1 sm:row-start-1 hidden lg:flex">
+              {images.map((img, index) => (
+                <li class="min-w-[63px] max-w-[105px]">
+                  <Slider.Dot index={index}>
+                    <Image
+                      style={{ aspectRatio: ASPECT_RATIO }}
+                      class="group-disabled:border-base-300 border rounded w-full h-auto"
+                      width={63}
+                      height={87.5}
+                      src={img.url!}
+                      alt={img.alternateName}
+                    />
+                  </Slider.Dot>
+                </li>
+              ))}
+            </ul>
 
             {/* Product Info */}
-            <div class="px-4 sm:pr-0 sm:pl-6 sm:col-start-3 sm:col-span-1 sm:row-start-1">
+            <div class="px-4 lg:pr-0 lg:pl-20 lg:col-start-3 lg:col-span-1 lg:row-start-1">
+              <div class={"py-3 hidden lg:flex"}>
+                <ProductName page={page} />
+              </div>
               <Price page={page} />
               <div class={"flex flex-col gap-3 my-3"}>
                 <p class={" text-[#616161] text-xs"}>
@@ -402,10 +423,11 @@ function Details({
               </div>
               <ProductSelectorPage page={page} />
               <Buttons page={page} />
-              <ProductInfo page={page} />
+              <div class={"mt-8"}>
+                <DivDrawerSimple title={"teste"} content={"teste"} />
+              </div>
             </div>
           </div>
-          <SliderJS rootId={id}></SliderJS>
         </div>
       </>
     );
@@ -428,11 +450,11 @@ function Details({
       <div>
         <ProductName page={page} />
       </div>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-[50vw_25vw] sm:grid-rows-1 sm:justify-center">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-[50vw_25vw] lg:grid-rows-1 lg:justify-center">
         {/* Image slider */}
         <ul class="carousel carousel-center gap-6">
           {[images[0], images[1] ?? images[0]].map((img, index) => (
-            <li class="carousel-item min-w-[100vw] sm:min-w-[24vw]">
+            <li class="carousel-item min-w-[100vw] lg:min-w-[24vw]">
               <Image
                 sizes="(max-width: 640px) 100vw, 24vw"
                 style={{ aspectRatio: ASPECT_RATIO }}
@@ -449,11 +471,13 @@ function Details({
         </ul>
 
         {/* Product Info */}
-        <div class="px-4 sm:pr-0 sm:pl-6">
+        <div class="px-4 lg:pr-0 lg:pl-6">
           <Price page={page} />
           <ProductSelectorPage page={page} />
           <Buttons page={page} />
-          <ProductInfo page={page} />
+          <div class={"mt-8"}>
+            <DivDrawerSimple title={"teste"} content={"teste"} />
+          </div>
         </div>
       </div>
     </div>
@@ -473,7 +497,7 @@ function ProductDetails({ page, variant: maybeVar = "auto" }: Props) {
     : maybeVar;
 
   return (
-    <div class="container py-0 sm:py-10">
+    <div class="container max-w-[1440px] lg:px-12 py-0 lg:py-10">
       {page ? <Details page={page} variant={variant} /> : <NotFound />}
     </div>
   );

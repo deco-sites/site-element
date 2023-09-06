@@ -6,18 +6,19 @@ import * as $$$$0 from "./routes/_app.tsx";
 import * as $$$$$0 from "./islands/AddToCartButton/vnda.tsx";
 import * as $$$$$1 from "./islands/AddToCartButton/vtex.tsx";
 import * as $$$$$2 from "./islands/DivClick.tsx";
-import * as $$$$$3 from "./islands/Header/Buttons.tsx";
-import * as $$$$$4 from "./islands/Header/Cart/vnda.tsx";
-import * as $$$$$5 from "./islands/Header/Cart/vtex.tsx";
-import * as $$$$$6 from "./islands/Header/Drawers.tsx";
-import * as $$$$$7 from "./islands/Header/Searchbar.tsx";
-import * as $$$$$8 from "./islands/Newsletter.tsx";
-import * as $$$$$9 from "./islands/OutOfStock.tsx";
-import * as $$$$$10 from "./islands/ProductImageZoom.tsx";
-import * as $$$$$11 from "./islands/SearchControls.tsx";
-import * as $$$$$12 from "./islands/ShippingSimulation.tsx";
-import * as $$$$$13 from "./islands/SliderJS.tsx";
-import * as $$$$$14 from "./islands/WishlistButton.tsx";
+import * as $$$$$3 from "./islands/DivDrawerSimple.tsx";
+import * as $$$$$4 from "./islands/Header/Buttons.tsx";
+import * as $$$$$5 from "./islands/Header/Cart/vnda.tsx";
+import * as $$$$$6 from "./islands/Header/Cart/vtex.tsx";
+import * as $$$$$7 from "./islands/Header/Drawers.tsx";
+import * as $$$$$8 from "./islands/Header/Searchbar.tsx";
+import * as $$$$$9 from "./islands/Newsletter.tsx";
+import * as $$$$$10 from "./islands/OutOfStock.tsx";
+import * as $$$$$11 from "./islands/ProductImageZoom.tsx";
+import * as $$$$$12 from "./islands/SearchControls.tsx";
+import * as $$$$$13 from "./islands/ShippingSimulation.tsx";
+import * as $$$$$14 from "./islands/SliderJS.tsx";
+import * as $$$$$15 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/Category/CategoryBanner.tsx";
 import * as $$$$$$$$1 from "./sections/Category/CategoryList.tsx";
 import * as $$$$$$$$2 from "./sections/Content/Benefits.tsx";
@@ -192,18 +193,19 @@ const manifest = {
     "./islands/AddToCartButton/vnda.tsx": $$$$$0,
     "./islands/AddToCartButton/vtex.tsx": $$$$$1,
     "./islands/DivClick.tsx": $$$$$2,
-    "./islands/Header/Buttons.tsx": $$$$$3,
-    "./islands/Header/Cart/vnda.tsx": $$$$$4,
-    "./islands/Header/Cart/vtex.tsx": $$$$$5,
-    "./islands/Header/Drawers.tsx": $$$$$6,
-    "./islands/Header/Searchbar.tsx": $$$$$7,
-    "./islands/Newsletter.tsx": $$$$$8,
-    "./islands/OutOfStock.tsx": $$$$$9,
-    "./islands/ProductImageZoom.tsx": $$$$$10,
-    "./islands/SearchControls.tsx": $$$$$11,
-    "./islands/ShippingSimulation.tsx": $$$$$12,
-    "./islands/SliderJS.tsx": $$$$$13,
-    "./islands/WishlistButton.tsx": $$$$$14,
+    "./islands/DivDrawerSimple.tsx": $$$$$3,
+    "./islands/Header/Buttons.tsx": $$$$$4,
+    "./islands/Header/Cart/vnda.tsx": $$$$$5,
+    "./islands/Header/Cart/vtex.tsx": $$$$$6,
+    "./islands/Header/Drawers.tsx": $$$$$7,
+    "./islands/Header/Searchbar.tsx": $$$$$8,
+    "./islands/Newsletter.tsx": $$$$$9,
+    "./islands/OutOfStock.tsx": $$$$$10,
+    "./islands/ProductImageZoom.tsx": $$$$$11,
+    "./islands/SearchControls.tsx": $$$$$12,
+    "./islands/ShippingSimulation.tsx": $$$$$13,
+    "./islands/SliderJS.tsx": $$$$$14,
+    "./islands/WishlistButton.tsx": $$$$$15,
   },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i2$$$$$0,
