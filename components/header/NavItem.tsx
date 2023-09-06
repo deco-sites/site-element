@@ -58,20 +58,20 @@ function NavItem({ item }: { item: INavItem }) {
                         </a>
                       </li>
                     ))}
-                    {image?.src && (
-                      <Image
-                        class="p-6"
-                        src={image.src}
-                        alt={image.alt}
-                        width={300}
-                        height={332}
-                        loading="lazy"
-                      />
-                    )}
                   </ul>
                 </li>
               ))}
             </ul>
+            {image?.src && (
+              <Image
+                class="my-3"
+                src={image.src}
+                alt={image.alt}
+                width={450}
+                height={250}
+                loading="lazy"
+              />
+            )}
           </div>
         )}
     </li>
