@@ -46,13 +46,9 @@ export default function Newsletter(props: Props) {
   const bordered = Boolean(layout?.content?.border);
 
   const headerLayout = (
-    <Header
-      title={title}
-      description={description}
-      alignment={layout?.content?.alignment === "Left" ? "left" : "center"}
-      colorReverse={isReverse}
-      fontSize={layout?.headerFontSize}
-    />
+    <h3 class="font-Poppins-Medium uppercase text-2xl text-secord-newsletter">
+      {title}
+    </h3>
   );
 
   const formLayout = form && (
@@ -104,7 +100,7 @@ export default function Newsletter(props: Props) {
       )}
       {layout?.content?.alignment === "Left" && (
         <div
-          class={`container flex flex-col rounded p-4 gap-6 lg:p-16 lg:gap-12 ${bgLayout}`}
+          class={`container flex flex-col rounded p-4 gap-6 lg:p-16 lg:gap-12 bg-primary-newsletter`}
         >
           {headerLayout}
           <div class="flex justify-start">

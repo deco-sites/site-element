@@ -18,6 +18,9 @@ import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "deco-sites/std/commerce/utils/productToAnalyticsItem.ts";
 import Image from "deco-sites/std/components/Image.tsx";
 import ProductSelector from "./ProductVariantSelector.tsx";
+import { Product } from "deco-sites/std/packs/vtex/types.ts";
+import { asset } from "$fresh/runtime.ts";
+import DivDrawerSimple from "deco-sites/staging/islands/DivDrawerSimple.tsx";
 
 export type Variant = "front-back" | "slider" | "auto";
 
@@ -50,6 +53,98 @@ function NotFound() {
   );
 }
 
+function ProductName({ page }: { page: ProductDetailsPage }) {
+  return (
+    <h1>
+      <span class="text-[20px] font-Poppins-SemiBold">
+        {page.product.name}
+      </span>
+    </h1>
+  );
+}
+
+function Price({ page }: { page: ProductDetailsPage }) {
+  const { product } = page;
+  const { offers } = product;
+  const { listPrice, price, installments } = useOffer(offers);
+  return (
+    <div class="mt-4">
+      <div class="flex flex-row gap-2 items-center">
+        <span class="line-through text-[#9e9e9e] text-xl font-Poppins-Medium">
+          {formatPrice(listPrice, offers!.priceCurrency!)}
+        </span>
+        <span class="font-medium text-xl text-base-300 font-Poppins-Medium">
+          {formatPrice(price, offers!.priceCurrency!)}
+        </span>
+      </div>
+      <span class="text-lg text-base-300">
+        {installments}
+      </span>
+    </div>
+  );
+}
+
+function ProductSelectorPage({ page }: { page: ProductDetailsPage }) {
+  const { product } = page;
+  return (
+    <>
+      {/* Sku Selector */}
+      <div class="mt-4 lg:mt-6">
+        <ProductSelector product={product} />
+      </div>
+    </>
+  );
+}
+
+function Buttons({ page }: { page: ProductDetailsPage }) {
+  const { product } = page;
+  const { name = "", productID, isVariantOf, offers, additionalProperty = [] } =
+    product;
+  const { price = 1, seller = "1", listPrice, availability } = useOffer(offers);
+  const productGroupID = isVariantOf?.productGroupID ?? "";
+  const discount = price && listPrice ? listPrice - price : 0;
+
+  return (
+    <>
+      {/* Add to Cart and Favorites button */}
+      <div class="mt-4 lg:mt-10 gap-2 grid grid-cols-[1fr_45px]">
+        {availability === "https://schema.org/InStock"
+          ? (
+            <>
+              {PLATFORM === "vtex" && (
+                <AddToCartButtonVTEX
+                  name={name}
+                  productID={productID}
+                  productGroupID={productGroupID}
+                  price={price}
+                  discount={discount}
+                  seller={seller}
+                />
+              )}
+              {PLATFORM === "vnda" && (
+                <AddToCartButtonVNDA
+                  name={name}
+                  productID={productID}
+                  productGroupID={productGroupID}
+                  price={price}
+                  discount={discount}
+                  additionalProperty={additionalProperty}
+                />
+              )}
+
+              <WishlistButton
+                variant="icon"
+                productID={productID}
+                productGroupID={productGroupID}
+              />
+            </>
+          )
+          : <OutOfStock productID={productID} />}
+      </div>
+    </>
+  );
+}
+
 function ProductInfo({ page }: { page: ProductDetailsPage }) {
   const {
     breadcrumbList,
@@ -76,74 +171,6 @@ function ProductInfo({ page }: { page: ProductDetailsPage }) {
 
   return (
     <>
-      {/* Breadcrumb */}
-      <Breadcrumb
-        itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
-      />
-      {/* Code and name */}
-      <div class="mt-4 sm:mt-8">
-        <div>
-          <span class="text-sm text-base-300">
-            Cod. {gtin}
-          </span>
-        </div>
-        <h1>
-          <span class="font-medium text-xl">{name}</span>
-        </h1>
-      </div>
-      {/* Prices */}
-      <div class="mt-4">
-        <div class="flex flex-row gap-2 items-center">
-          <span class="line-through text-base-300 text-xs">
-            {formatPrice(listPrice, offers!.priceCurrency!)}
-          </span>
-          <span class="font-medium text-xl text-secondary">
-            {formatPrice(price, offers!.priceCurrency!)}
-          </span>
-        </div>
-        <span class="text-sm text-base-300">
-          {installments}
-        </span>
-      </div>
-      {/* Sku Selector */}
-      <div class="mt-4 sm:mt-6">
-        <ProductSelector product={product} />
-      </div>
-      {/* Add to Cart and Favorites button */}
-      <div class="mt-4 sm:mt-10 flex flex-col gap-2">
-        {availability === "https://schema.org/InStock"
-          ? (
-            <>
-              {PLATFORM === "vtex" && (
-                <AddToCartButtonVTEX
-                  name={name}
-                  productID={productID}
-                  productGroupID={productGroupID}
-                  price={price}
-                  discount={discount}
-                  seller={seller}
-                />
-              )}
-              {PLATFORM === "vnda" && (
-                <AddToCartButtonVNDA
-                  name={name}
-                  productID={productID}
-                  productGroupID={productGroupID}
-                  price={price}
-                  discount={discount}
-                  additionalProperty={additionalProperty}
-                />
-              )}
-
-              <WishlistButton
-                variant="full"
-                productID={productID}
-                productGroupID={productGroupID}
-              />
-            </>
-          )
-          : <OutOfStock productID={productID} />}
-      </div>
       {/* Shipping Simulation */}
       <div class="mt-8">
         <ShippingSimulation
@@ -155,8 +182,8 @@ function ProductInfo({ page }: { page: ProductDetailsPage }) {
         />
       </div>
       {/* Description card */}
-      <div class="mt-4 sm:mt-6">
-        <span class="text-sm">
+      <div class="mt-4 lg:mt-6">
+        <span class="text-lg">
           {description && (
             <details>
               <summary class="cursor-pointer">Descrição</summary>
@@ -251,7 +278,8 @@ function Details({
   page,
   variant,
 }: { page: ProductDetailsPage; variant: Variant }) {
-  const { product } = page;
+  const { product, breadcrumbList } = page;
+  const { name = "" } = product;
   const id = useId();
   const images = useStableImages(product);
 
@@ -265,81 +293,142 @@ function Details({
   if (variant === "slider") {
     return (
       <>
-        <div
-          id={id}
-          class="grid grid-cols-1 gap-4 sm:grid-cols-[max-content_40vw_40vw] sm:grid-rows-1 sm:justify-center"
-        >
-          {/* Image Slider */}
-          <div class="relative sm:col-start-2 sm:col-span-1 sm:row-start-1">
-            <Slider class="carousel carousel-center gap-6 w-screen sm:w-[40vw]">
+        <div>
+          <div class={"p-3"}>
+            {/* Breadcrumb */}
+            <Breadcrumb
+              itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
+            />
+          </div>
+          <div class={"px-3 lg:hidden"}>
+            <ProductName page={page} />
+          </div>
+          <div
+            id={id}
+            class="grid grid-cols-1 gap-4 lg:grid-cols-[105px_1fr_1fr] lg:grid-rows-1 lg:justify-center"
+          >
+            {/* Image Slider */}
+            <div class="relative lg:col-start-2 lg:col-span-1 lg:row-start-1">
+              <Slider class="carousel carousel-center gap-6 w-screen lg:w-[40vw] lg:max-w-[650px]">
+                {images.map((img, index) => (
+                  <Slider.Item
+                    index={index}
+                    class="carousel-item w-full"
+                  >
+                    <Image
+                      class="w-full"
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                      style={{ aspectRatio: ASPECT_RATIO }}
+                      src={img.url!}
+                      alt={img.alternateName}
+                      width={WIDTH}
+                      height={HEIGHT}
+                      // Preload LCP image for better web vitals
+                      preload={index === 0}
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                  </Slider.Item>
+                ))}
+              </Slider>
+
+              <Slider.PrevButton
+                class="no-animation absolute left-2 top-1/2 before:content-['\E90E'] before:font-Element-Icons block before:text-[23px] p-3"
+                disabled
+              >
+              </Slider.PrevButton>
+
+              <Slider.NextButton
+                class="no-animation absolute right-2 top-1/2 before:content-['\E910'] before:font-Element-Icons block before:text-[23px] p-3"
+                disabled={images.length < 2}
+              >
+              </Slider.NextButton>
+
+              <div class="absolute top-2 right-2 bg-base-100 rounded-full">
+                <ProductImageZoom
+                  images={images}
+                  width={700}
+                  height={Math.trunc(700 * HEIGHT / WIDTH)}
+                />
+              </div>
+
+              {/* Dots */}
+              <ul class="flex gap-2 justify-center overflow-auto px-4 lg:px-0 lg:flex-col lg:col-start-1 lg:col-span-1 lg:row-start-1 absolute w-full bottom-0">
+                {images.map((img, index) => (
+                  <li class="min-w-[8px] flex justify-center items-center">
+                    <Slider.Dot index={index}>
+                      <div class="py-5 flex lg:hidden">
+                        <div class="w-2 h-2 rounded group-disabled:bg-[#aeaeb2cc] bg-default " />
+                      </div>
+                    </Slider.Dot>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Dots */}
+            <ul class="gap-2 sm:justify-start overflow-auto px-4 sm:px-0 sm:flex-col sm:col-start-1 sm:col-span-1 sm:row-start-1 hidden lg:flex">
               {images.map((img, index) => (
-                <Slider.Item
-                  index={index}
-                  class="carousel-item w-full"
-                >
-                  <Image
-                    class="w-full"
-                    sizes="(max-width: 640px) 100vw, 40vw"
-                    style={{ aspectRatio: ASPECT_RATIO }}
-                    src={img.url!}
-                    alt={img.alternateName}
-                    width={WIDTH}
-                    height={HEIGHT}
-                    // Preload LCP image for better web vitals
-                    preload={index === 0}
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-                </Slider.Item>
+                <li class="min-w-[63px] max-w-[105px]">
+                  <Slider.Dot index={index}>
+                    <Image
+                      style={{ aspectRatio: ASPECT_RATIO }}
+                      class="group-disabled:border-base-300 border rounded w-full h-auto"
+                      width={63}
+                      height={87.5}
+                      src={img.url!}
+                      alt={img.alternateName}
+                    />
+                  </Slider.Dot>
+                </li>
               ))}
-            </Slider>
+            </ul>
 
-            <Slider.PrevButton
-              class="no-animation absolute left-2 top-1/2 btn btn-circle btn-outline"
-              disabled
-            >
-              <Icon size={24} id="ChevronLeft" strokeWidth={3} />
-            </Slider.PrevButton>
-
-            <Slider.NextButton
-              class="no-animation absolute right-2 top-1/2 btn btn-circle btn-outline"
-              disabled={images.length < 2}
-            >
-              <Icon size={24} id="ChevronRight" strokeWidth={3} />
-            </Slider.NextButton>
-
-            <div class="absolute top-2 right-2 bg-base-100 rounded-full">
-              <ProductImageZoom
-                images={images}
-                width={700}
-                height={Math.trunc(700 * HEIGHT / WIDTH)}
-              />
+            {/* Product Info */}
+            <div class="px-4 lg:pr-0 lg:pl-20 lg:col-start-3 lg:col-span-1 lg:row-start-1">
+              <div class={"py-3 hidden lg:flex"}>
+                <ProductName page={page} />
+              </div>
+              <Price page={page} />
+              <div class={"flex flex-col gap-3 my-3"}>
+                <p class={" text-[#616161] text-xs"}>
+                  Or 4 interest free payments of $13.50 by
+                </p>
+                <div class={"w-full flex flex-row"}>
+                  <image
+                    src={asset(`/image/afterpay.png`)}
+                    loading={"lazy"}
+                    width={80}
+                    height={18}
+                  >
+                  </image>
+                  <p class={"text-[#616161] text-xs"}>
+                    LEARN MORE
+                  </p>
+                </div>
+                <p class={"text-danger text-[13px]"}>
+                  Extra 50% Off — Applied in Cart
+                </p>
+                <image
+                  src={asset(`/image/my_element.png`)}
+                  loading={"lazy"}
+                  width={250}
+                  height={51}
+                >
+                </image>
+                <p class={"text-[#616161] text-xs"}>
+                  FREE SHIPPING, FREE RETURNS, & AND REWARDS
+                </p>
+                <a class={"text-[#616161] text-xs uppercase underline"}>
+                  JOIN NOW or SIGN IN
+                </a>
+              </div>
+              <ProductSelectorPage page={page} />
+              <Buttons page={page} />
+              <div class={"mt-8"}>
+                <DivDrawerSimple title={"teste"} content={"teste"} />
+              </div>
             </div>
           </div>
-
-          {/* Dots */}
-          <ul class="flex gap-2 sm:justify-start overflow-auto px-4 sm:px-0 sm:flex-col sm:col-start-1 sm:col-span-1 sm:row-start-1">
-            {images.map((img, index) => (
-              <li class="min-w-[63px] sm:min-w-[100px]">
-                <Slider.Dot index={index}>
-                  <Image
-                    style={{ aspectRatio: ASPECT_RATIO }}
-                    class="group-disabled:border-base-300 border rounded "
-                    width={63}
-                    height={87.5}
-                    src={img.url!}
-                    alt={img.alternateName}
-                  />
-                </Slider.Dot>
-              </li>
-            ))}
-          </ul>
-
-          {/* Product Info */}
-          <div class="px-4 sm:pr-0 sm:pl-6 sm:col-start-3 sm:col-span-1 sm:row-start-1">
-            <ProductInfo page={page} />
-          </div>
         </div>
-        <SliderJS rootId={id}></SliderJS>
       </>
     );
   }
@@ -351,29 +440,45 @@ function Details({
    * reached causing a scrollbar to be rendered.
    */
   return (
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-[50vw_25vw] sm:grid-rows-1 sm:justify-center">
-      {/* Image slider */}
-      <ul class="carousel carousel-center gap-6">
-        {[images[0], images[1] ?? images[0]].map((img, index) => (
-          <li class="carousel-item min-w-[100vw] sm:min-w-[24vw]">
-            <Image
-              sizes="(max-width: 640px) 100vw, 24vw"
-              style={{ aspectRatio: ASPECT_RATIO }}
-              src={img.url!}
-              alt={img.alternateName}
-              width={WIDTH}
-              height={HEIGHT}
-              // Preload LCP image for better web vitals
-              preload={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
-            />
-          </li>
-        ))}
-      </ul>
+    <div>
+      <div class={"p-3"}>
+        {/* Breadcrumb */}
+        <Breadcrumb
+          itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
+        />
+      </div>
+      <div>
+        <ProductName page={page} />
+      </div>
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-[50vw_25vw] lg:grid-rows-1 lg:justify-center">
+        {/* Image slider */}
+        <ul class="carousel carousel-center gap-6">
+          {[images[0], images[1] ?? images[0]].map((img, index) => (
+            <li class="carousel-item min-w-[100vw] lg:min-w-[24vw]">
+              <Image
+                sizes="(max-width: 640px) 100vw, 24vw"
+                style={{ aspectRatio: ASPECT_RATIO }}
+                src={img.url!}
+                alt={img.alternateName}
+                width={WIDTH}
+                height={HEIGHT}
+                // Preload LCP image for better web vitals
+                preload={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            </li>
+          ))}
+        </ul>
 
-      {/* Product Info */}
-      <div class="px-4 sm:pr-0 sm:pl-6">
-        <ProductInfo page={page} />
+        {/* Product Info */}
+        <div class="px-4 lg:pr-0 lg:pl-6">
+          <Price page={page} />
+          <ProductSelectorPage page={page} />
+          <Buttons page={page} />
+          <div class={"mt-8"}>
+            <DivDrawerSimple title={"teste"} content={"teste"} />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -392,7 +497,7 @@ function ProductDetails({ page, variant: maybeVar = "auto" }: Props) {
     : maybeVar;
 
   return (
-    <div class="container py-0 sm:py-10">
+    <div class="container max-w-[1440px] lg:px-12 py-0 lg:py-10">
       {page ? <Details page={page} variant={variant} /> : <NotFound />}
     </div>
   );

@@ -1,93 +1,58 @@
-import { useSignal } from "@preact/signals";
-import { Runtime } from "$store/runtime.ts";
-import type { JSX } from "preact";
-
-const subscribe = Runtime.create(
-  "deco-sites/std/actions/vtex/newsletter/subscribe.ts",
-);
-
-export interface Form {
-  placeholder?: string;
-  buttonText?: string;
-  /** @format html */
-  helpText?: string;
-}
+import Button from "deco-sites/staging/components/ui/Button.tsx";
+import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
+import { lazy } from "https://esm.sh/v118/preact@10.15.1/compat/src/suspense.js";
 
 export interface Props {
-  content: {
-    title?: string;
-    /** @format textarea */
-    description?: string;
-    form?: Form;
-  };
-  layout?: {
-    tiled?: boolean;
-  };
+  img: LiveImage;
+  alt: string;
+  title: string;
+  description: string;
+  placeholder: string;
+  labelbtn: string;
 }
 
 function Newsletter(
-  { content, layout = {} }: Props,
+  { img, alt, title, description, placeholder, labelbtn }: Props,
 ) {
-  const { tiled = false } = layout;
-  const loading = useSignal(false);
-
-  const handleSubmit: JSX.GenericEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-
-    try {
-      loading.value = true;
-
-      const email =
-        (e.currentTarget.elements.namedItem("email") as RadioNodeList)?.value;
-
-      await subscribe({ email });
-    } finally {
-      loading.value = false;
-    }
-  };
-
   return (
     <div
-      class={`flex ${
-        tiled
-          ? "flex-col gap-4 lg:flex-row lg:w-full lg:justify-between"
-          : "flex-col gap-4"
-      }`}
+      class={"flex w-full justify-center items-center flex-col bg-primary-newsletter pt-8 pb-5"}
     >
-      <div class="flex flex-col gap-4">
-        {content?.title && (
-          <h3 class={tiled ? "text-2xl lg:text-3xl" : "text-lg"}>
-            {content?.title}
-          </h3>
-        )}
-        {content?.description && <div>{content?.description}</div>}
-      </div>
-      <div class="flex flex-col gap-4">
-        <form
-          class="form-control"
-          onSubmit={handleSubmit}
+      <div
+        class={"flex w-full justify-start flex-col max-w-[400px] lg:max-w-[1530px] lg:flex-row lg:mx-0 items-center px-7"}
+      >
+        <img
+          class={"mb-10 lg:mb-0 lg:mr-4 self-start lg:self-center"}
+          src={img}
+          loading="lazy"
+          alt={alt}
+          width={50}
+          height={50}
         >
-          <div class="flex flex-wrap gap-3">
-            <input
-              name="email"
-              class="flex-auto md:flex-none input input-bordered md:w-80 text-base-content"
-              placeholder={content?.form?.placeholder || "Digite seu email"}
-            />
-            <button
-              type="submit"
-              class="btn disabled:loading"
-              disabled={loading}
-            >
-              {content?.form?.buttonText || "Inscrever"}
-            </button>
-          </div>
-        </form>
-        {content?.form?.helpText && (
-          <div
-            class="text-sm"
-            dangerouslySetInnerHTML={{ __html: content?.form?.helpText }}
-          />
-        )}
+        </img>
+        <div class={"w-full flex flex-col items-start"}>
+          <h3
+            class={"font-Poppins-SemiBold uppercase text-secord-newsletter text-start text-[30px] tracking-[0.1rem] leading-[2rem] mb-2"}
+          >
+            {title}
+          </h3>
+          <p class={"font-Poppins-Regular text-xs text-secord-newsletter"}>
+            {description}
+          </p>
+        </div>
+        <div
+          class={"w-full flex flex-col lg:flex-row lg:gap-2 items-center justify-end"}
+        >
+          <input
+            class={" w-full border text-secord-newsletter border-secord-newsletter text-sm bg-transparent px-2 py-3 my-6 lg:max-w-[520px]"}
+            type="text"
+            placeholder={placeholder}
+          >
+          </input>
+          <Button class={"w-full uppercase text-xs lg:max-w-[130px]"}>
+            {labelbtn}
+          </Button>
+        </div>
       </div>
     </div>
   );

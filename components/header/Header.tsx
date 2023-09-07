@@ -2,21 +2,16 @@ import type { Props as SearchbarProps } from "$store/components/search/Searchbar
 import Drawers from "$store/islands/Header/Drawers.tsx";
 import type { Product, Suggestion } from "deco-sites/std/commerce/types.ts";
 import type { Image } from "deco-sites/std/components/types.ts";
-import Alert from "./Alert.tsx";
+import Alert, { ItemAlert, OuthersLinks } from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
 import { headerHeight } from "./constants.ts";
 
+export type Transform = "uppercase" | "lowercase";
 export interface NavItem {
   label: string;
   href: string;
-  children?: Array<{
-    label: string;
-    href: string;
-    children?: Array<{
-      label: string;
-      href: string;
-    }>;
-  }>;
+  textTransform?: Transform; // Adicione esta propriedade
+  children?: Array<NavItem>;
   image?: {
     src?: Image;
     alt?: string;
@@ -24,7 +19,8 @@ export interface NavItem {
 }
 
 export interface Props {
-  alerts: string[];
+  alerts: ItemAlert[];
+  outhesLinks: OuthersLinks;
   /** @title Search Bar */
   searchbar?: SearchbarProps;
   /**
@@ -50,6 +46,7 @@ export interface Props {
 
 function Header({
   alerts,
+  outhesLinks,
   searchbar: _searchbar,
   products,
   navItems = [],
@@ -59,13 +56,13 @@ function Header({
   const searchbar = { ..._searchbar, products, suggestions };
   return (
     <>
-      <header style={{ height: headerHeight }}>
+      <header class={"h-[116px] lg:h-[103px]"}>
         <Drawers
           menu={{ items: navItems }}
           searchbar={searchbar}
         >
-          <div class="bg-base-100 fixed w-full z-50">
-            <Alert alerts={alerts} />
+          <div class="bg-base-100 w-full z-50">
+            <Alert alerts={alerts} outhersLinks={outhesLinks} />
             <Navbar items={navItems} searchbar={searchbar} logo={logo} />
           </div>
         </Drawers>

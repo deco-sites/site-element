@@ -7,6 +7,7 @@ import type {
   FilterToggleValue,
   ProductListingPage,
 } from "deco-sites/std/commerce/types.ts";
+import DivDrawerFilter from "deco-sites/staging/islands/DivDrawerFilter.tsx";
 
 interface Props {
   filters: ProductListingPage["filters"];
@@ -19,10 +20,15 @@ function ValueItem(
   { url, selected, label, quantity }: FilterToggleValue,
 ) {
   return (
-    <a href={url} class="flex items-center gap-2">
-      <div aria-checked={selected} class="checkbox" />
+    <a
+      href={url}
+      class="flex items-center gap-3 font-Poppins-Regular pl-2"
+    >
+      <div
+        aria-checked={selected}
+        class="checkbox rounded-full max-w-[15px] max-h-[15px]"
+      />
       <span class="text-sm">{label}</span>
-      {quantity > 0 && <span class="text-sm text-base-300">({quantity})</span>}
     </a>
   );
 }
@@ -67,13 +73,20 @@ function FilterValues({ key, values }: FilterToggle) {
 
 function Filters({ filters }: Props) {
   return (
-    <ul class="flex flex-col gap-6 p-4">
+    <ul class="flex flex-col pt-3 px-3 w-[80vw] lg:px-0 lg:w-full">
       {filters
         .filter(isToggle)
-        .map((filter) => (
+        .map((filter, index) => (
           <li class="flex flex-col gap-4">
-            <span>{filter.label}</span>
-            <FilterValues {...filter} />
+            <DivDrawerFilter
+              title={filter.label}
+              index={index}
+              children={
+                <>
+                  <FilterValues {...filter} />
+                </>
+              }
+            />
           </li>
         ))}
     </ul>

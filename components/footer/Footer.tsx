@@ -1,351 +1,243 @@
-import Logo from "$store/components/footer/Logo.tsx";
-import Newsletter from "$store/islands/Newsletter.tsx";
-import FooterItems from "$store/components/footer/FooterItems.tsx";
-import Social from "$store/components/footer/Social.tsx";
-import PaymentMethods from "$store/components/footer/PaymentMethods.tsx";
-import MobileApps from "$store/components/footer/MobileApps.tsx";
-import ExtraLinks from "$store/components/footer/ExtraLinks.tsx";
-import RegionSelector from "$store/components/footer/RegionSelector.tsx";
-import ColorClasses from "$store/components/footer/ColorClasses.tsx";
-import Divider from "$store/components/footer/Divider.tsx";
-import BackToTop from "$store/components/footer/BackToTop.tsx";
-import PoweredByDeco from "deco-sites/std/components/PoweredByDeco.tsx";
-import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
-
-export type Item = {
+import { useId } from "$store/sdk/useId.ts";
+import Slider from "$store/components/ui/Slider.tsx";
+import SliderJS from "$store/islands/SliderJS.tsx";
+import DivDrawer from "deco-sites/staging/islands/DivClick.tsx";
+import { repeat } from "https://deno.land/std@0.140.0/bytes/mod.ts";
+export type Link = {
   label: string;
   href: string;
 };
 
-export type Section = {
-  label: string;
-  items: Item[];
+export type socialMedia = {
+  social:
+    | "Facebook"
+    | "Twitter"
+    | "Instagram"
+    | "YouTube"
+    | "Spotify"
+    | "Tiktok ";
+  href?: string;
 };
 
-export interface SocialItem {
-  label:
-    | "Discord"
-    | "Facebook"
-    | "Instagram"
-    | "Linkedin"
-    | "Tiktok"
-    | "Twitter";
-  link: string;
+export type ListItem = {
+  title: string;
+  itens: Link[];
+};
+
+interface Props {
+  links: Link[];
+
+  location?: "Find a Store" | string;
+  contact?: "Contact Us" | string;
+
+  socialMedia?: socialMedia[];
+
+  listItem?: ListItem[];
+
+  selectRegion?: string;
+
+  infosFooter?: Link[];
 }
 
-export interface PaymentItem {
-  label: "Diners" | "Elo" | "Mastercard" | "Pix" | "Visa";
+function SocialMedia({ social }: socialMedia) {
+  switch (social) {
+    case "Facebook":
+      return <span class="before:content-['\E900']"></span>;
+    case "Twitter":
+      return <span class="before:content-['\E903']"></span>;
+    case "Instagram":
+      return <span class="before:content-['\E901']"></span>;
+    case "YouTube":
+      return <span class="before:content-['\E902']"></span>;
+    case "Spotify":
+      return <span class="before:content-['\E923']"></span>;
+    case "Tiktok ":
+      return <span class="before:content-['\E924']"></span>;
+    default:
+      return null;
+  }
 }
 
-export interface MobileApps {
-  /** @description Link to the app */
-  apple?: string;
-  /** @description Link to the app */
-  android?: string;
-}
-
-export interface RegionOptions {
-  currency?: Item[];
-  language?: Item[];
-}
-
-export interface NewsletterForm {
-  placeholder?: string;
-  buttonText?: string;
-  /** @format html */
-  helpText?: string;
-}
-
-export interface Layout {
-  backgroundColor?:
-    | "Primary"
-    | "Secondary"
-    | "Accent"
-    | "Base 100"
-    | "Base 100 inverted";
-  variation?:
-    | "Variation 1"
-    | "Variation 2"
-    | "Variation 3"
-    | "Variation 4"
-    | "Variation 5";
-  hide?: {
-    logo?: boolean;
-    newsletter?: boolean;
-    sectionLinks?: boolean;
-    socialLinks?: boolean;
-    paymentMethods?: boolean;
-    mobileApps?: boolean;
-    regionOptions?: boolean;
-    extraLinks?: boolean;
-    backToTheTop?: boolean;
-  };
-}
-
-export interface Props {
-  logo?: {
-    image: LiveImage;
-    description?: string;
-  };
-  newsletter?: {
-    title?: string;
-    /** @format textarea */
-    description?: string;
-    form?: NewsletterForm;
-  };
-  sections?: Section[];
-  social?: {
-    title?: string;
-    items: SocialItem[];
-  };
-  payments?: {
-    title?: string;
-    items: PaymentItem[];
-  };
-  mobileApps?: MobileApps;
-  regionOptions?: RegionOptions;
-  extraLinks?: Item[];
-  backToTheTop?: {
-    text?: string;
-  };
-  layout?: Layout;
-}
-
-function Footer({
-  logo,
-  newsletter = {
-    title: "Newsletter",
-    description: "",
-    form: { placeholder: "", buttonText: "", helpText: "" },
-  },
-  sections = [{
-    "label": "Sobre",
-    "items": [
-      {
-        "href": "/quem-somos",
-        "label": "Quem somos",
-      },
-      {
-        "href": "/termos-de-uso",
-        "label": "Termos de uso",
-      },
-      {
-        "href": "/trabalhe-conosco",
-        "label": "Trabalhe conosco",
-      },
-    ],
-  }, {
-    "label": "Atendimento",
-    "items": [
-      {
-        "href": "/centraldeatendimento",
-        "label": "Central de atendimento",
-      },
-      {
-        "href": "/whatsapp",
-        "label": "Fale conosco pelo WhatsApp",
-      },
-      {
-        "href": "/trocaedevolucao",
-        "label": "Troca e devolução",
-      },
-    ],
-  }],
-  social = {
-    title: "Redes sociais",
-    items: [{ label: "Instagram", link: "/" }, { label: "Tiktok", link: "/" }],
-  },
-  payments = {
-    title: "Formas de pagamento",
-    items: [{ label: "Mastercard" }, { label: "Visa" }, { label: "Pix" }],
-  },
-  mobileApps = { apple: "/", android: "/" },
-  regionOptions = { currency: [], language: [] },
-  extraLinks = [],
-  backToTheTop,
-  layout = {
-    backgroundColor: "Primary",
-    variation: "Variation 1",
-    hide: {
-      logo: false,
-      newsletter: false,
-      sectionLinks: false,
-      socialLinks: false,
-      paymentMethods: false,
-      mobileApps: false,
-      regionOptions: false,
-      extraLinks: false,
-      backToTheTop: false,
-    },
-  },
-}: Props) {
-  const _logo = layout?.hide?.logo ? <></> : <Logo logo={logo} />;
-  const _newsletter = layout?.hide?.newsletter ? <></> : (
-    <Newsletter
-      content={newsletter}
-      layout={{
-        tiled: layout?.variation == "Variation 4" ||
-          layout?.variation == "Variation 5",
-      }}
-    />
-  );
-  const _sectionLinks = layout?.hide?.sectionLinks ? <></> : (
-    <FooterItems
-      sections={sections}
-      justify={layout?.variation == "Variation 2" ||
-        layout?.variation == "Variation 3"}
-    />
-  );
-  const _social = layout?.hide?.socialLinks
-    ? <></>
-    : <Social content={social} vertical={layout?.variation == "Variation 3"} />;
-  const _payments = layout?.hide?.paymentMethods
-    ? <></>
-    : <PaymentMethods content={payments} />;
-  const _apps = layout?.hide?.mobileApps
-    ? <></>
-    : <MobileApps content={mobileApps} />;
-  const _region = layout?.hide?.regionOptions
-    ? <></>
-    : <RegionSelector content={regionOptions} />;
-  const _links = layout?.hide?.extraLinks
-    ? <></>
-    : <ExtraLinks content={extraLinks} />;
-
+function Link({ link }: { link: Link }) {
+  const { label, href } = link;
   return (
-    <footer
-      class={`w-full flex flex-col pt-10 pb-2 md:pb-10 gap-10 ${
-        ColorClasses(layout)
-      }`}
+    <a
+      href={href}
+      class={"rounded-full bg-tag-footer text-default text-xs py-2 px-6 tracking-widest"}
     >
-      <div class="lg:container mx-6 lg:mx-auto">
-        {(!layout?.variation || layout?.variation == "Variation 1") && (
-          <div class="flex flex-col gap-10">
-            <div class="flex flex-col md:flex-row md:justify-between md:flex-wrap lg:flex-nowrap gap-8 lg:gap-12">
-              {_logo}
-              {_sectionLinks}
-              {_newsletter}
-            </div>
-            <Divider />
-            <div class="flex flex-col md:flex-row gap-10 md:gap-14 md:items-end">
-              {_payments}
-              {_social}
-              <div class="flex flex-col lg:flex-row gap-10 lg:gap-14 lg:items-end">
-                {_apps}
-                {_region}
-              </div>
-            </div>
-            <Divider />
-            <div class="flex flex-col-reverse md:flex-row md:justify-between gap-10">
-              <PoweredByDeco />
-              {_links}
-            </div>
-          </div>
-        )}
-        {layout?.variation == "Variation 2" && (
-          <div class="flex flex-col gap-10">
-            <div class="flex flex-col md:flex-row gap-10">
-              <div class="flex flex-col gap-10 lg:w-1/2">
-                {_logo}
-                {_social}
-                {_payments}
-                {_apps}
-                {_region}
-              </div>
-              <div class="flex flex-col gap-10 lg:gap-20 lg:w-1/2 lg:pr-10">
-                {_newsletter}
-                {_sectionLinks}
-              </div>
-            </div>
-            <Divider />
-            <div class="flex flex-col-reverse md:flex-row md:justify-between gap-10">
-              <PoweredByDeco />
-              {_links}
-            </div>
-          </div>
-        )}
-        {layout?.variation == "Variation 3" && (
-          <div class="flex flex-col gap-10">
-            {_logo}
-            <div class="flex flex-col lg:flex-row gap-14">
-              <div class="flex flex-col md:flex-row lg:flex-col md:justify-between lg:justify-normal gap-10 lg:w-2/5">
-                {_newsletter}
-                <div class="flex flex-col gap-10">
-                  {_payments}
-                  {_apps}
-                </div>
-              </div>
-              <div class="flex flex-col gap-10 lg:gap-20 lg:w-3/5 lg:items-end">
-                <div class="flex flex-col md:flex-row gap-10">
-                  {_sectionLinks}
-                  {_social}
-                </div>
-                {_region}
-              </div>
-            </div>
-            <Divider />
-            <div class="flex flex-col-reverse md:flex-row md:justify-between gap-10">
-              <PoweredByDeco />
-              {_links}
-            </div>
-          </div>
-        )}
-        {layout?.variation == "Variation 4" && (
-          <div class="flex flex-col gap-10">
-            {_newsletter}
-            {layout?.hide?.newsletter ? <></> : <Divider />}
-            <div class="flex flex-col lg:flex-row gap-10 lg:gap-20 lg:justify-between">
-              {_sectionLinks}
-              <div class="flex flex-col md:flex-row lg:flex-col gap-10 lg:gap-10 lg:w-2/5 lg:pl-10">
-                <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
-                  <div class="lg:flex-auto">
-                    {_payments}
-                  </div>
-                  <div class="lg:flex-auto">
-                    {_social}
-                  </div>
-                </div>
-                <div class="flex flex-col gap-10 lg:gap-10">
-                  {_region}
-                  {_apps}
-                </div>
-              </div>
-            </div>
-            <Divider />
-            <div class="flex flex-col md:flex-row md:justify-between gap-10 md:items-center">
-              {_logo}
-              <PoweredByDeco />
-            </div>
-          </div>
-        )}
-        {layout?.variation == "Variation 5" && (
-          <div class="flex flex-col gap-10">
-            {_newsletter}
-            {layout?.hide?.newsletter ? <></> : <Divider />}
-            {_logo}
-            <div class="flex flex-col md:flex-row gap-10 lg:gap-20 md:justify-between">
-              {_sectionLinks}
-              <div class="flex flex-col gap-10 md:w-2/5 lg:pl-10">
-                {_payments}
-                {_social}
-                {_apps}
-              </div>
-            </div>
-            <Divider />
-            <div class="flex flex-col-reverse md:flex-row md:justify-between gap-10 md:items-center">
-              <PoweredByDeco />
-              <div class="flex flex-col md:flex-row gap-10 md:items-center">
-                {_links}
-                {_region}
-              </div>
-            </div>
-          </div>
-        )}
+      {label}
+    </a>
+  );
+}
+
+function SlideLinks({ links }: Props) {
+  const id = useId();
+  return (
+    <div
+      id={id}
+      class={"flex relative z-50 w-full justify-center  "}
+    >
+      <div class={" w-full"}>
+        <div
+          class={" max-w-[1530px] w-full mx-auto lg:px-7"}
+        >
+          <Slider class="carousel  carousel-center w-full col-span-full border-b border-primary-newsletter px-3 row-span-full gap-5 py-8 lg:px-0">
+            {links?.map((link, index) => (
+              <Slider.Item
+                index={index}
+                class="carousel-item flex justify-center items-center"
+              >
+                <Link link={link} />
+              </Slider.Item>
+            ))}
+          </Slider>
+          <SliderJS rootId={id} />
+        </div>
       </div>
-      {layout?.hide?.backToTheTop
-        ? <></>
-        : <BackToTop content={backToTheTop?.text} />}
-    </footer>
+    </div>
+  );
+}
+
+function Footer(
+  {
+    links,
+    contact,
+    location,
+    socialMedia,
+    listItem,
+    selectRegion,
+    infosFooter,
+  }: Props,
+) {
+  return (
+    <div class={"w-full bg-footer"}>
+      <SlideLinks links={links} />
+      <div class={"lg:hidden"}>
+        <div class={"w-full flex flex-row justify-center"}>
+          <div class={"w-full flex flex-col justify-center items-center"}>
+            <a class=" text-default before:content-['\E91E'] font-Poppins-Medium before:font-Element-Icons before:text-[30px] w-full text-center px-4 py-14 before:block border-r border-primary-newsletter">
+              {location}
+            </a>
+          </div>
+          <div class={"w-full flex flex-col justify-center items-center"}>
+            <a class=" text-default before:content-['\E92E'] font-Poppins-Medium before:font-Element-Icons before:text-[30px] w-full text-center px-4 py-14 before:block ">
+              {contact}
+            </a>
+          </div>
+        </div>
+        <div
+          class={"w-full flex justify-center gap-4 px-9 py-9 border-y border-primary-newsletter"}
+        >
+          {socialMedia?.map((social) => (
+            <a
+              href={social.href}
+              class={"font-Element-Icons text-[1.75rem] text-default hover:text-primary-newsletter "}
+            >
+              <SocialMedia social={social.social} />
+            </a>
+          ))}
+        </div>
+        <div>
+          {listItem?.map((item) => <DivDrawer listItem={item} />)}
+        </div>
+      </div>
+      {/* desktop */}
+      <div
+        class={`hidden w-full lg:grid grid-rows-1 max-w-[1530px] mx-auto py-7 px-7`}
+        style={{
+          gridTemplateColumns: `repeat(${
+            listItem ? listItem.length + 1 : 1
+          },minmax(0,1fr))`,
+        }}
+      >
+        <div>
+          <div>
+            <h4
+              class={"text-default uppercase pb-3 text-sm font-Poppins-Medium"}
+            >
+              {location}
+            </h4>
+            <div class={"pb-7"}>
+              <input
+                class={"border border-primary-newsletter pl-2 py-1 bg-transparent text-xs font-Poppins-Regular w-full h-[40px] max-w-[300px]"}
+                type="text"
+                placeholder={"Search your location"}
+              >
+                <button class="w-[40px] h-[40px]] after:content-['\E930'] after:font-Element-Icons text-[20px] relative top-[5px] right-[40px] text-default">
+                </button>
+              </input>
+            </div>
+          </div>
+          <div>
+            <h4
+              class={"text-default uppercase pb-3 text-sm font-Poppins-Medium"}
+            >
+              {"Foolow Us"}
+            </h4>
+            <div
+              class={"w-full flex justify-start gap-4 pr-9 py-9 lg:py-0 "}
+            >
+              {socialMedia?.map((social) => (
+                <a
+                  href={social.href}
+                  class={"font-Element-Icons text-[1.75rem] text-default hover:text-primary-newsletter"}
+                >
+                  <SocialMedia social={social.social} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        {listItem?.map((iten) => (
+          <div>
+            <h4
+              class={"text-default uppercase pb-3 text-sm font-Poppins-Medium"}
+            >
+              {iten.title}
+            </h4>
+            <ul>
+              {iten.itens.map((link) => (
+                <li
+                  class={"text-default hover:text-primary-newsletter font-Poppins-Medium text-xs pb-2"}
+                >
+                  <a href={link.href}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class={"lg:px-7 lg:max-w-[1530px] mx-auto"}>
+        <div
+          class={"flex flex-col gap-4 p-7 lg:flex-row lg:border-t lg:border-primary-newsletter lg:px-0"}
+        >
+          <div class={"flex w-full justify-center  lg:justify-start"}>
+            <span class="text-default font-Poppins-Medium before:content-['\E92F'] before:text-[20pxpx] before:font-Element-Icons before:block flex flex-row gap-2">
+              {selectRegion}
+            </span>
+          </div>
+          <div class={"w-full flex justify-center lg:justify-end "}>
+            <span
+              class={"text-center text-default text-xs hover:text-default lg:text-end"}
+            >
+              {infosFooter?.map((infos) => (
+                <a
+                  class={"text-primary-newsletter text-xs border-r border-primary-newsletter last:border-none px-2"}
+                  href={infos.href}
+                >
+                  {infos.label}
+                </a>
+              ))}
+              <span class={"mr-2"}>
+                © 2022 Boardriders. All rights reserved
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

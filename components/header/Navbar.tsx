@@ -6,7 +6,7 @@ import CartButtonVTEX from "$store/islands/Header/Cart/vtex.tsx";
 import Searchbar from "$store/islands/Header/Searchbar.tsx";
 import { PLATFORM } from "$store/platform.ts";
 import Image from "deco-sites/std/components/Image.tsx";
-import type { INavItem } from "./NavItem.tsx";
+import type { INavItem, Transform } from "./NavItem.tsx";
 import NavItem from "./NavItem.tsx";
 import { navbarHeight } from "./constants.ts";
 
@@ -20,22 +20,21 @@ function Navbar({ items, searchbar, logo }: {
       {/* Mobile Version */}
       <div
         style={{ height: navbarHeight }}
-        class="md:hidden flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6 gap-2"
+        class="lg:hidden grid grid-cols-3 grid-rows-1 items-center border-b border-base-200 w-full px-4 pr-6 gap-2"
       >
         <MenuButton />
 
         {logo && (
           <a
             href="/"
-            class="flex-grow inline-flex items-center"
+            class="flex-grow inline-flex items-center justify-center before:content-['\E904'] before:font-Element-Icons text-[36px] before:text-black"
             style={{ minHeight: navbarHeight }}
             aria-label="Store logo"
           >
-            <Image src={logo.src} alt={logo.alt} width={126} height={16} />
           </a>
         )}
 
-        <div class="flex gap-1">
+        <div class="flex gap-1 justify-end">
           <SearchButton />
           {PLATFORM === "vtex" && <CartButtonVTEX />}
           {PLATFORM === "vnda" && <CartButtonVDNA />}
@@ -43,15 +42,14 @@ function Navbar({ items, searchbar, logo }: {
       </div>
 
       {/* Desktop Version */}
-      <div class="hidden md:flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6">
-        <div class="flex-none w-44">
+      <div class="hidden lg:flex flex-row justify-between items-center max-w-[1530px] mx-auto w-full px-9 h-[64px] ">
+        <div class="flex ">
           {logo && (
             <a
               href="/"
               aria-label="Store logo"
-              class="block px-4 py-3 w-[160px]"
+              class="flex gap-2 items-center py-3 after:content-['\E915'] after:font-Element-Icons text-black after:block after:text-[1.5rem] before:content-['\E904'] before:font-Element-Icons before:block before:text-[2rem]"
             >
-              <Image src={logo.src} alt={logo.alt} width={126} height={16} />
             </a>
           )}
         </div>
@@ -61,25 +59,6 @@ function Navbar({ items, searchbar, logo }: {
         <div class="flex-none w-44 flex items-center justify-end gap-2">
           <SearchButton />
           <Searchbar searchbar={searchbar} />
-          <a
-            class="btn btn-circle btn-sm btn-ghost"
-            href="/login"
-            aria-label="Log in"
-          >
-            <Icon id="User" size={24} strokeWidth={0.4} />
-          </a>
-          <a
-            class="btn btn-circle btn-sm btn-ghost"
-            href="/wishlist"
-            aria-label="Wishlist"
-          >
-            <Icon
-              id="Heart"
-              size={24}
-              strokeWidth={2}
-              fill="none"
-            />
-          </a>
           {PLATFORM === "vtex" && <CartButtonVTEX />}
           {PLATFORM === "vnda" && <CartButtonVDNA />}
         </div>

@@ -39,13 +39,21 @@ function CardText(
 ) {
   return (
     <div
-      class={`flex flex-col ${
+      class={`flex flex-col mt-9   ${
         alignment === "center" ? "text-center" : "text-left"
       }`}
     >
-      {tag && <div class="text-sm text-primary">{tag}</div>}
-      {label && <h3 class="text-lg text-base-content">{label}</h3>}
-      {description && <div class="text-sm text-neutral">{description}</div>}
+      {tag && <div class="text-sm text-primary ">{tag}</div>}
+      {label && (
+        <h3 class="text-sm mb-2 text-base-content font-Poppins-SemiBold">
+          {label}
+        </h3>
+      )}
+      {description && (
+        <div class="text-sm text-neutral font-Poppins-Regular underline">
+          {description}
+        </div>
+      )}
     </div>
   );
 }
@@ -80,26 +88,26 @@ function CategoryList(props: Props) {
   return (
     <div
       id={id}
-      class="container py-8 flex flex-col gap-8 lg:gap-10 text-base-content  lg:py-10"
+      class="container flex flex-col text-base-content my-20 justify-center max-w-[1488px] pb-12 "
     >
-      <Header
-        title={header.title}
-        description={header.description || ""}
-        alignment={layout.headerAlignment || "center"}
-      />
+      <h2
+        class={"uppercase text-2xl text-center font-Poppins-SemiBold mb-12"}
+      >
+        {header.title}
+      </h2>
 
-      <Slider class="carousel carousel-start gap-4 lg:gap-8 row-start-2 row-end-5">
+      <Slider class="carousel carousel-center gap-4 lg:gap-4 row-start-2 row-end-5 lg:justify-center sm:justify-center">
         {list.map((
           { tag, label, description, href, image, buttonText },
           index,
         ) => (
           <Slider.Item
             index={index}
-            class="flex flex-col gap-4 carousel-item first:pl-6 sm:first:pl-0 last:pr-6 sm:last:pr-0"
+            class="flex flex-col gap-4 carousel-item first:pl-6 sm:first:pl-0 last:pr-6 sm:last:pr-0 sm:w-1/5 w-11/12 lg:w-full lg:max-w-[285px] 2xl:max-w-[348px]"
           >
             <a
               href={href}
-              class="flex flex-col gap-4 lg:w-[280px] w-40 lg:h-auto"
+              class="flex flex-col lg:max-w-[285px] 2xl:max-w-[348px] sm:max-w-[11rem] w-[calc(100vw - 70px)] lg:h-auto"
             >
               {layout.categoryCard?.textPosition === "top" &&
                 (
@@ -112,13 +120,13 @@ function CategoryList(props: Props) {
                 )}
               {image &&
                 (
-                  <figure>
+                  <figure class={" overflow-hidden"}>
                     <Image
-                      class="card w-full"
+                      class="w-full hover:scale-110 ease-in-out transform duration-200 "
                       src={image}
                       alt={description || label || tag}
-                      width={160}
-                      height={195}
+                      width={290}
+                      height={362}
                       loading="lazy"
                     />
                   </figure>
